@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADMIN ROBOT QR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0a;
+            color: #00ffaa;
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 20% 30%, #0d1a0d, #050a05);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            font-family: 'Orbitron', monospace;
+            font-size: 26px;
+            text-align: center;
+            border-bottom: 2px solid #00ffaa44;
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+            color: #00ffaa;
+            text-shadow: 0 0 30px #00ffaa33;
+            letter-spacing: 4px;
+        }
+        .login-box {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #0d1a0d;
+            border: 1px solid #00ffaa33;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #00ffaa44;
+            border-radius: 8px;
+            color: #00ffaa;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        .login-box input:focus {
+            border-color: #00ffaa;
+            box-shadow: 0 0 20px #00ffaa22;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .login-box button:hover {
+            background: #00ffaa11;
+            box-shadow: 0 0 30px #00ffaa22;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #0d1a0d;
+            border: 1px solid #00ffaa33;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-card .num {
+            font-size: 32px;
+            font-family: 'Orbitron', monospace;
+            color: #00ffaa;
+        }
+        .stat-card .label {
+            font-size: 11px;
+            color: #00ffaa66;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .card {
+            background: #0d1a0d;
+            border: 1px solid #00ffaa33;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            color: #00ffaa;
+            border-bottom: 1px solid #00ffaa22;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #00ffaa11;
+            font-size: 14px;
+        }
+        .row .label {
+            color: #00ffaa66;
+        }
+        .row .value {
+            color: #ffffff;
+            word-break: break-word;
+            text-align: right;
+            max-width: 60%;
+        }
+        .empty {
+            text-align: center;
+            color: #00ffaa44;
+            padding: 40px 0;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        .btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background: #00ffaa11;
+            box-shadow: 0 0 30px #00ffaa22;
+        }
+        .btn-danger {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+        .btn-danger:hover {
+            background: #ff444411;
+            box-shadow: 0 0 30px #ff444422;
+        }
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filters input,
+        .filters select {
+            padding: 10px 14px;
+            background: #0d1a0d;
+            border: 1px solid #00ffaa33;
+            border-radius: 8px;
+            color: #00ffaa;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            outline: none;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filters input:focus,
+        .filters select:focus {
+            border-color: #00ffaa;
+        }
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #00ffaa22;
+            padding-top: 16px;
+            text-align: center;
+            font-size: 11px;
+            color: #00ffaa44;
+            letter-spacing: 2px;
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .row .value {
+                text-align: left;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="header">◈ ROBOT QR ADMIN ◈</div>
+
+        <!-- Login -->
+        <div id="loginBox" class="login-box">
+            <h3 style="color:#00ffaa;margin-bottom:16px;">🔐 ADMIN LOGIN</h3>
+            <input type="password" id="adminPassword" placeholder="Masukkan password" />
+            <button onclick="login()">LOGIN</button>
+            <div id="loginError" style="color:#ff4444;margin-top:12px;display:none;">Password salah!</div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden">
+            <div class="stats" id="stats">
+                <div class="stat-card"><div class="num" id="totalOrders">0</div><div class="label">Total Sewa</div></div>
+                <div class="stat-card"><div class="num" id="totalKeluhan">0</div><div class="label">Keluhan</div></div>
+                <div class="stat-card"><div class="num" id="totalRevenue">0</div><div class="label">Pendapatan</div></div>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Cari No WA / Nama..." oninput="renderData()">
+                <select id="filterNominal" onchange="renderData()">
+                    <option value="">Semua Nominal</option>
+                    <option value="10000">Rp 10.000</option>
+                    <option value="20000">Rp 20.000</option>
+                    <option value="50000">Rp 50.000</option>
+                    <option value="100000">Rp 100.000</option>
+                    <option value="250000">Rp 250.000</option>
+                </select>
+                <button class="btn btn-danger" onclick="clearAllData()">Hapus Semua</button>
+                <button class="btn" onclick="exportCSV()">📥 Export CSV</button>
+                <button class="btn" onclick="refreshData()">🔄 Refresh</button>
+            </div>
+
+            <div id="dataContainer">
+                <div class="empty">⏻ Belum ada data sewa masuk.</div>
+            </div>
+        </div>
+
+        <div class="footer">⚡ ROBOT QR ADMIN • ALL DATA REAL-TIME</div>
+    </div>
+
+    <script>
+        let allData = [];
+        const ADMIN_PASSWORD = 'rahasia123';
+
+        function login() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === ADMIN_PASSWORD) {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('dashboard').className = '';
+                fetchData();
+                setInterval(fetchData, 5000);
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        async function fetchData() {
+            try {
+                const res = await fetch('/api/admin-data', {
+                    headers: { 'x-admin-password': ADMIN_PASSWORD }
+                });
+                if (res.ok) {
+                    allData = await res.json();
+                    renderData();
+                }
+            } catch (err) {
+                console.error('Gagal fetch data:', err);
+            }
+        }
+
+        function renderData() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filterNominal = document.getElementById('filterNominal').value;
+
+            let filtered = allData.filter(item => {
+                const matchSearch = (item.noWa || '').includes(search) || (item.atasNama || '').toLowerCase().includes(search);
+                const matchNominal = filterNominal === '' || item.nominal === filterNominal;
+                return matchSearch && matchNominal;
+            });
+
+            // Stats
+            document.getElementById('totalOrders').textContent = allData.length;
+            document.getElementById('totalKeluhan').textContent = allData.filter(i => i.keluhan && i.keluhan.trim() !== '').length;
+            const total = allData.reduce((sum, i) => sum + parseInt(i.nominal || 0), 0);
+            document.getElementById('totalRevenue').textContent = 'Rp ' + total.toLocaleString();
+
+            const container = document.getElementById('dataContainer');
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty">⏻ Tidak ada data yang cocok.</div>`;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach((item, index) => {
+                const realIndex = allData.indexOf(item);
+                html += `
+                    <div class="card">
+                        <h3>🔹 SEWA #${realIndex + 1}</h3>
+                        <div class="row"><span class="label">Nominal</span><span class="value">Rp ${parseInt(item.nominal).toLocaleString()}</span></div>
+                        <div class="row"><span class="label">No Dana</span><span class="value">${item.noDana}</span></div>
+                        <div class="row"><span class="label">Atas Nama</span><span class="value">${item.atasNama}</span></div>
+                        <div class="row"><span class="label">No WhatsApp</span><span class="value">${item.noWa}</span></div>
+                        <div class="row"><span class="label">Keluhan</span><span class="value">${item.keluhan || 'Tidak ada'}</span></div>
+                        <div class="row"><span class="label">Waktu</span><span class="value">${item.waktu || '-'}</span></div>
+                        <div style="margin-top:10px;">
+                            <button class="btn btn-danger" onclick="deleteItem(${item.id})">Hapus</button>
+                            <button class="btn" onclick="copyData(${realIndex})">📋 Copy</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        async function deleteItem(id) {
+            if (!confirm('Hapus data ini?')) return;
+            try {
+                await fetch(`/api/admin-delete?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'x-admin-password': ADMIN_PASSWORD }
+                });
+                fetchData();
+            } catch (err) {
+                alert('Gagal hapus data');
+            }
+        }
+
+        async function clearAllData() {
+            if (!confirm('Hapus SEMUA data? Ini permanen!')) return;
+            try {
+                await fetch('/api/admin-clear', {
+                    method: 'DELETE',
+                    headers: { 'x-admin-password': ADMIN_PASSWORD }
+                });
+                fetchData();
+            } catch (err) {
+                alert('Gagal hapus semua data');
+            }
+        }
+
+        function copyData(index) {
+            const item = allData[index];
+            const text = `
+        SEWA QR
+        Nominal: Rp ${parseInt(item.nominal).toLocaleString()}
+        No Dana: ${item.noDana}
+        Atas Nama: ${item.atasNama}
+        No WA: ${item.noWa}
+        Keluhan: ${item.keluhan || '-'}
+        Waktu: ${item.waktu || '-'}
+        `.trim();
+            navigator.clipboard.writeText(text).then(() => alert('Data disalin!'));
+        }
+
+        function exportCSV() {
+            if (allData.length === 0) return alert('Tidak ada data');
+            let csv = 'Nominal,No Dana,Atas Nama,No WA,Keluhan,Waktu\n';
+            allData.forEach(i => {
+                csv += `${i.nominal},${i.noDana},${i.atasNama},${i.noWa},"${i.keluhan || ''}",${i.waktu || ''}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'qr_sewa_data.csv';
+            link.click();
+        }
+
+        function refreshData() {
+            fetchData();
+        }
+    </script>
+</body>
+</html>
