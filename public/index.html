@@ -27,7 +27,7 @@
             border: 2px solid #ff333366;
             padding: 30px;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             border-radius: 16px;
             box-shadow: 0 0 60px #ff333333;
         }
@@ -96,6 +96,34 @@
             background: #ff333311;
             box-shadow: 0 0 40px #ff333344;
         }
+        .btn-secondary {
+            border-color: #ff666644;
+            color: #ff6666;
+            margin-top: 10px;
+        }
+        .btn-secondary:hover {
+            background: #ff333311;
+            box-shadow: 0 0 30px #ff333322;
+        }
+        .qris-box {
+            background: #1a0000;
+            border: 2px solid #ff333344;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .qris-box img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+        .qris-box .qris-label {
+            color: #ff666688;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
         .info-box {
             background: #1a0000;
             border: 1px solid #ff333322;
@@ -128,6 +156,34 @@
             border: 1px solid #ff0000;
             color: #ff4444;
         }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .menu-btn {
+            padding: 12px 8px;
+            background: #1a0000;
+            border: 1px solid #ff333344;
+            border-radius: 8px;
+            color: #ff6666;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+        .menu-btn:hover {
+            background: #ff333311;
+            border-color: #ff3333;
+        }
+        .menu-btn .icon {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
         .footer {
             margin-top: 24px;
             border-top: 1px solid #ff333322;
@@ -137,9 +193,19 @@
             color: #ff333344;
             letter-spacing: 1px;
         }
+        .dev-manzy {
+            color: #ff333344;
+            font-size: 9px;
+            text-align: center;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
         @media (max-width: 500px) {
             .terminal {
                 padding: 20px;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr 1fr 1fr;
             }
         }
     </style>
@@ -150,6 +216,32 @@
         <div class="header">◈ ROBOT QR SEWA ◈</div>
         <p style="text-align:center;color:#ff666688;font-size:13px;margin-bottom:20px;">Aman • Terpercaya • 100% Robot</p>
 
+        <!-- QRIS -->
+        <div class="qris-box">
+            <div class="qris-label">⬇️ SCAN QRIS UNTUK BAYAR ⬇️</div>
+            <!-- ====== TEMPEL LINK QRIS LO DI SINI ====== -->
+            <img src="https://files.catbox.moe/mijh7w.jpeg" alt="QRIS" />
+            <!-- Atau pake link direct: https://your-qris-image-link.png -->
+            <div style="margin-top:10px;font-size:10px;color:#ff666644;">Admin fee Rp 250 per transaksi</div>
+        </div>
+
+        <!-- MENU KHUSUS -->
+        <div class="menu-grid">
+            <div class="menu-btn" onclick="scrollToForm()">
+                <span class="icon">📝</span>
+                SEWA QR
+            </div>
+            <div class="menu-btn" onclick="scrollToKeluhan()">
+                <span class="icon">💬</span>
+                KELUHAN
+            </div>
+            <div class="menu-btn" onclick="showDev()">
+                <span class="icon">⚙️</span>
+                DEV MANZY
+            </div>
+        </div>
+
+        <!-- FORM SEWA -->
         <form id="formSewa">
             <label class="label">PILIH NOMINAL</label>
             <select id="nominal" required>
@@ -159,7 +251,13 @@
                 <option value="50000">Rp 50.000</option>
                 <option value="100000">Rp 100.000</option>
                 <option value="250000">Rp 250.000</option>
+                <option value="custom">💎 Custom Nominal</option>
             </select>
+
+            <!-- Input custom nominal (hidden by default) -->
+            <div id="customNominalBox" style="display:none; margin-top:8px;">
+                <input type="number" id="customNominal" placeholder="Masukkan nominal (contoh: 75000)" min="1000" />
+            </div>
 
             <label class="label">NO DANA (Pengirim)</label>
             <input type="text" id="noDana" placeholder="081234567890" required>
@@ -170,7 +268,7 @@
             <label class="label">NO WHATSAPP</label>
             <input type="text" id="noWa" placeholder="081234567890" required>
 
-            <label class="label">KELUHAN (Opsional)</label>
+            <label class="label" id="keluhanLabel">KELUHAN (Opsional)</label>
             <textarea id="keluhan" placeholder="Tulis keluhan di sini..."></textarea>
 
             <button type="submit" class="btn">>> SEWA QR <<</button>
@@ -187,14 +285,55 @@
             • Terpercaya sejak 2026
         </div>
 
+        <div class="dev-manzy">⚡ DEVELOPED BY DEV MANZY ⚡</div>
         <div class="footer">⚡ ROBOT QR SEWA v2.0 • ALL RIGHTS RESERVED</div>
     </div>
 
     <script>
+        // Toggle custom nominal input
+        document.getElementById('nominal').addEventListener('change', function() {
+            const customBox = document.getElementById('customNominalBox');
+            if (this.value === 'custom') {
+                customBox.style.display = 'block';
+            } else {
+                customBox.style.display = 'none';
+            }
+        });
+
+        // SCROLL KE FORM
+        function scrollToForm() {
+            document.getElementById('formSewa').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // SCROLL KE KELUHAN
+        function scrollToKeluhan() {
+            document.getElementById('keluhan').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('keluhan').focus();
+        }
+
+        // DEV MANZY
+        function showDev() {
+            alert('⚡ DEV MANZY ⚡\n\nRobot QR Sewa v2.0\nFull Stack Developer\n\n"Kode adalah senjata, etika adalah perisai."');
+        }
+
+        // FORM SUBMIT
         document.getElementById('formSewa').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const nominal = document.getElementById('nominal').value;
+            let nominal = document.getElementById('nominal').value;
+
+            // Jika custom, ambil dari input custom
+            if (nominal === 'custom') {
+                nominal = document.getElementById('customNominal').value;
+                if (!nominal || isNaN(nominal) || parseInt(nominal) < 1000) {
+                    const status = document.getElementById('statusMessage');
+                    status.className = 'status error';
+                    status.textContent = '❌ Masukkan nominal yang valid (minimal Rp 1.000)!';
+                    status.style.display = 'block';
+                    return;
+                }
+            }
+
             const noDana = document.getElementById('noDana').value;
             const atasNama = document.getElementById('atasNama').value;
             const noWa = document.getElementById('noWa').value;
@@ -203,6 +342,13 @@
             const status = document.getElementById('statusMessage');
             status.className = 'status';
             status.style.display = 'none';
+
+            if (!nominal || !noDana || !atasNama || !noWa) {
+                status.className = 'status error';
+                status.textContent = '❌ Semua field wajib diisi kecuali keluhan!';
+                status.style.display = 'block';
+                return;
+            }
 
             try {
                 const res = await fetch('/api/sewa', {
@@ -215,9 +361,10 @@
 
                 if (data.success) {
                     status.className = 'status success';
-                    status.textContent = '✅ ' + data.message;
+                    status.textContent = '✅ ' + data.message + '\nSilakan transfer ke QRIS di atas.';
                     status.style.display = 'block';
                     this.reset();
+                    document.getElementById('customNominalBox').style.display = 'none';
                 } else {
                     status.className = 'status error';
                     status.textContent = '❌ ' + (data.error || 'Gagal menyewa');
