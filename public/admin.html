@@ -155,6 +155,22 @@
             background: #00ffaa11;
             box-shadow: 0 0 30px #00ffaa22;
         }
+        .btn-wa {
+            border-color: #25D366;
+            color: #25D366;
+        }
+        .btn-wa:hover {
+            background: #25D36611;
+            box-shadow: 0 0 30px #25D36622;
+        }
+        .btn-bukti {
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+        .btn-bukti:hover {
+            background: #ffaa0011;
+            box-shadow: 0 0 30px #ffaa0022;
+        }
         .btn-danger {
             border-color: #ff4444;
             color: #ff4444;
@@ -197,6 +213,13 @@
         }
         .hidden {
             display: none;
+        }
+        .dev-manzy {
+            color: #00ffaa33;
+            font-size: 9px;
+            text-align: center;
+            margin-top: 10px;
+            letter-spacing: 2px;
         }
         @media (max-width: 600px) {
             .row {
@@ -251,6 +274,7 @@
             </div>
         </div>
 
+        <div class="dev-manzy">⚡ DEVELOPED BY DEV MANZY ⚡</div>
         <div class="footer">⚡ ROBOT QR ADMIN • ALL DATA REAL-TIME</div>
     </div>
 
@@ -310,6 +334,17 @@
             let html = '';
             filtered.forEach((item, index) => {
                 const realIndex = allData.indexOf(item);
+                const waLink = `https://wa.me/62${item.noWa.replace(/^0+/, '')}`;
+                const buktiMessage = encodeURIComponent(
+                    `Halo *${item.atasNama}*, terima kasih sudah order QR Sewa.\n\n` +
+                    `✅ *QR SEWA ANDA SUDAH AKTIF!*\n` +
+                    `📌 Nominal: Rp ${parseInt(item.nominal).toLocaleString()}\n` +
+                    `📅 Waktu: ${item.waktu}\n\n` +
+                    `📸 *Bukti Transfer:* (tempel gambar bukti TF lo di sini)\n\n` +
+                    `Terima kasih telah menggunakan layanan kami. 🙏`
+                );
+                const waBuktiLink = `https://wa.me/62${item.noWa.replace(/^0+/, '')}?text=${buktiMessage}`;
+
                 html += `
                     <div class="card">
                         <h3>🔹 SEWA #${realIndex + 1}</h3>
@@ -319,8 +354,11 @@
                         <div class="row"><span class="label">No WhatsApp</span><span class="value">${item.noWa}</span></div>
                         <div class="row"><span class="label">Keluhan</span><span class="value">${item.keluhan || 'Tidak ada'}</span></div>
                         <div class="row"><span class="label">Waktu</span><span class="value">${item.waktu || '-'}</span></div>
-                        <div style="margin-top:10px;">
-                            <button class="btn btn-danger" onclick="deleteItem(${item.id})">Hapus</button>
+                        <div class="row"><span class="label">Status</span><span class="value" style="color:#ffaa00;">${item.status || 'Menunggu Konfirmasi'}</span></div>
+                        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;">
+                            <button class="btn btn-wa" onclick="window.open('${waLink}','_blank')">💬 Chat WA</button>
+                            <button class="btn btn-bukti" onclick="window.open('${waBuktiLink}','_blank')">📸 Kirim Bukti TF</button>
+                            <button class="btn btn-danger" onclick="deleteItem(${item.id})">🗑️ Hapus</button>
                             <button class="btn" onclick="copyData(${realIndex})">📋 Copy</button>
                         </div>
                     </div>
