@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROBOT QR SEWA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0f0000;
+            color: #ff3333;
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, #1a0000, #050000);
+        }
+        .terminal {
+            background: #0a0000;
+            border: 2px solid #ff333366;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 16px;
+            box-shadow: 0 0 60px #ff333333;
+        }
+        .header {
+            font-family: 'Orbitron', monospace;
+            font-size: 22px;
+            text-align: center;
+            border-bottom: 2px solid #ff333344;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            letter-spacing: 3px;
+            color: #ff3333;
+            text-shadow: 0 0 20px #ff3333;
+        }
+        .robot-icon {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .label {
+            font-size: 13px;
+            color: #ff666688;
+            letter-spacing: 2px;
+            margin-top: 12px;
+            display: block;
+        }
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1a0000;
+            border: 1px solid #ff333344;
+            border-radius: 8px;
+            color: #ff6666;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            outline: none;
+            margin-top: 4px;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #ff3333;
+            box-shadow: 0 0 20px #ff333322;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px solid #ff3333;
+            color: #ff3333;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            letter-spacing: 3px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #ff333311;
+            box-shadow: 0 0 40px #ff333344;
+        }
+        .info-box {
+            background: #1a0000;
+            border: 1px solid #ff333322;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #ff666688;
+        }
+        .info-box strong {
+            color: #ff3333;
+        }
+        .status {
+            text-align: center;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none;
+            font-weight: bold;
+        }
+        .status.success {
+            display: block;
+            background: #00330033;
+            border: 1px solid #00ff66;
+            color: #00ff66;
+        }
+        .status.error {
+            display: block;
+            background: #33000033;
+            border: 1px solid #ff0000;
+            color: #ff4444;
+        }
+        .footer {
+            margin-top: 24px;
+            border-top: 1px solid #ff333322;
+            padding-top: 14px;
+            text-align: center;
+            font-size: 10px;
+            color: #ff333344;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 500px) {
+            .terminal {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="robot-icon">🤖</div>
+        <div class="header">◈ ROBOT QR SEWA ◈</div>
+        <p style="text-align:center;color:#ff666688;font-size:13px;margin-bottom:20px;">Aman • Terpercaya • 100% Robot</p>
+
+        <form id="formSewa">
+            <label class="label">PILIH NOMINAL</label>
+            <select id="nominal" required>
+                <option value="">-- Pilih --</option>
+                <option value="10000">Rp 10.000</option>
+                <option value="20000">Rp 20.000</option>
+                <option value="50000">Rp 50.000</option>
+                <option value="100000">Rp 100.000</option>
+                <option value="250000">Rp 250.000</option>
+            </select>
+
+            <label class="label">NO DANA (Pengirim)</label>
+            <input type="text" id="noDana" placeholder="081234567890" required>
+
+            <label class="label">ATAS NAMA</label>
+            <input type="text" id="atasNama" placeholder="Nama lengkap" required>
+
+            <label class="label">NO WHATSAPP</label>
+            <input type="text" id="noWa" placeholder="081234567890" required>
+
+            <label class="label">KELUHAN (Opsional)</label>
+            <textarea id="keluhan" placeholder="Tulis keluhan di sini..."></textarea>
+
+            <button type="submit" class="btn">>> SEWA QR <<</button>
+        </form>
+
+        <div id="statusMessage" class="status"></div>
+
+        <div class="info-box">
+            <strong>💡 DETAIL LAYANAN</strong><br>
+            • QR Code siap pakai untuk pembayaran<br>
+            • Admin fee <strong>Rp 250</strong> per nominal<br>
+            • Proses cepat & aman<br>
+            • Support 24 jam via WhatsApp<br>
+            • Terpercaya sejak 2026
+        </div>
+
+        <div class="footer">⚡ ROBOT QR SEWA v2.0 • ALL RIGHTS RESERVED</div>
+    </div>
+
+    <script>
+        document.getElementById('formSewa').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const nominal = document.getElementById('nominal').value;
+            const noDana = document.getElementById('noDana').value;
+            const atasNama = document.getElementById('atasNama').value;
+            const noWa = document.getElementById('noWa').value;
+            const keluhan = document.getElementById('keluhan').value;
+
+            const status = document.getElementById('statusMessage');
+            status.className = 'status';
+            status.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/sewa', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nominal, noDana, atasNama, noWa, keluhan })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    status.className = 'status success';
+                    status.textContent = '✅ ' + data.message;
+                    status.style.display = 'block';
+                    this.reset();
+                } else {
+                    status.className = 'status error';
+                    status.textContent = '❌ ' + (data.error || 'Gagal menyewa');
+                    status.style.display = 'block';
+                }
+            } catch (err) {
+                status.className = 'status error';
+                status.textContent = '❌ Terjadi kesalahan: ' + err.message;
+                status.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
